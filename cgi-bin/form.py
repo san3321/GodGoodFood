@@ -5,6 +5,16 @@ import requests
 import json
 from collections import namedtuple
 
+
+form = cgi.FieldStorage()
+lat = form.getfirst("Latitude", "ошибка")
+lon = form.getfirst("Longitude", "ошибка")
+
+ccoo= lat + ", " + lon
+
+
+
+
 #Обработка ответа
 def places_response(x):
     i = 0
@@ -70,7 +80,7 @@ print("""<!DOCTYPE HTML>
 print("<h1>ВОТ СЮДА ИДЁШЬ:</h1>")
 print("<p>{}</p>".format(mesto))
 
-
+print("<p>{}</p>".format(ccoo))
 
 print("""</body>
         </html>""")

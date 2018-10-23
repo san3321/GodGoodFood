@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -5,15 +7,35 @@
 <title>GodGoodFood</title>
 </head>
 <body>
-    <form action="/cgi-bin/form.py">
+	
+	<input type="text" id="lat" name="Latitude" form="go">
+	<input type="text" id="lon" name="Longitude" form="go">
+	<form id="go" action="/cgi-bin/form.py">
         <input type="submit" value = "Погнали">
+		
+		
     </form>
+		
+	<script type="text/javascript">
+		var x = document.getElementById("lat");
+		var y = document.getElementById("lon");
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(showPosition);
+		} else { 
+			x.innerHTML = "Geolocation is not supported by this browser.";
+		}
+		function showPosition(position) {
+			x.innerHTML = position.coords.latitude; 
+			y.innerHTML = position.coords.longitude;	
+		}
+	</script>
+	
+    
+	
+	
+	
 </body>
 </html>
-
-
-
-
 
 
 
