@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -8,32 +6,48 @@
 </head>
 <body>
 	
-	<textarea id="lat" name="Latitude" form="go"></textarea>
-	<textarea id="lon" name="Longitude" form="go"></textarea>
-	<form id="go" action="/cgi-bin/form.py">
-        <input type="submit" value = "Погнали">
-		
-		
-    </form>
-		
+	<button type="button" id="Main_button" onclick ="gogo()">
+	
 	<script type="text/javascript">
-		var x = document.getElementById("lat");
-		var y = document.getElementById("lon");
+		
+		var button = document.getElementById("Main_button")
+		//var x = document.getElementById("lat");
+		//var y = document.getElementById("lon");
+		var xhr = new XMLHttpRequest();
+		var url = "http://8b7b2f19.ngrok.io";
+		var lat = ""
+		var lon = ""
+				
+				
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(showPosition);
 		} else { 
 			x.innerHTML = "Geolocation is not supported by this browser.";
-		}
+		}		
+				
 		function showPosition(position) {
-			x.innerHTML = position.coords.latitude; 
-			y.innerHTML = position.coords.longitude;	
+				lat = position.coords.latitude
+				lon = position.coords.longitude
+				console.log("Попал")
+			}
+				
+		function gogo(){
+				xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState === 4 && xhr.status === 200) {
+				
+				var json = JSON.parse(xhr.responseText);
+				console.log(json.lat + ", " + json.lon); //Ответ от .py
+				//console.log(xhr.responseText)
+			}
+		}
+		
+		var data = JSON.stringify({"lat": lat, "lon": lon});
+		console.log(data)
+		xhr.send(data);
 		}
 	</script>
-	
-    
-	
-	
-	
 </body>
 </html>
 
