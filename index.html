@@ -2,41 +2,98 @@
 
 <!DOCTYPE HTML>
 <html>
-<head>
-<meta charset="utf-8">
-<title>GodGoodFood</title>
-</head>
-<body>
-	
-	<textarea id="lat" name="Latitude" form="go"></textarea>
-	<textarea id="lon" name="Longitude" form="go"></textarea>
-	<form id="go" action="/cgi-bin/form.py">
-        <input type="submit" value = "Погнали">
-		
-		
-    </form>
-		
-	<script type="text/javascript">
-		var x = document.getElementById("lat");
-		var y = document.getElementById("lon");
-		
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(showPosition);
-		} else { 
-			x.innerHTML = "Geolocation is not supported by this browser.";
-		}
 
-		function showPosition(position) {
-			x.innerHTML = position.coords.latitude; 
-			y.innerHTML = position.coords.longitude;	
-		}
-	</script>
-	
+<head>
+  <meta charset="utf-8">
+  <title>GodGoodFood</title>
+<link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+  <script src="http://mrdoob.github.com/three.js/build/three.min.js"></script>
+         <script src="http://code.jquery.com/jquery-latest.min.js"
+        type="text/javascript"></script>
+  
+<div id="icons" onClick="hideImage()">
+  <img class= "food-icon" src="/foodIcons/buger.jpg" />
+  <img class= "food-icon" src="/foodIcons/chiken.jpg" />
+  <img class= "food-icon" src="/foodIcons/curasan.jpg" />
+  <img class= "food-icon" src="/foodIcons/hotdog.jpg" />
+  <img class= "food-icon" src="/foodIcons/icecream.jpg" />
+  <img class= "food-icon" src="/foodIcons/pizza.jpg" />
+  <img class= "food-icon" src="/foodIcons/poncik.jpg" />
+  <img class= "food-icon" src="/foodIcons/potato.jpg" />
+  <img class= "food-icon" src="/foodIcons/sandwitch.jpg" />
+  <img class= "food-icon" src="/foodIcons/shava.jpg" />
+</div>
+  <b class ="place-to-eat">Вот сюда сходи</b>
+  <script type="text/javascript">
+   $( ".place-to-eat" ).fadeOut(0);
+  var now = new Date().getTime();
+  var currentImageIndex = 9;
+  var repeatCounter = 0;
+  
+  var arrayOfImages = document.getElementsByClassName("food-icon");
+        
+    function hideImage(){
+      arrayOfImages[currentImageIndex].style.visibility = "hidden";
+      if (currentImageIndex > 0) {
+        currentImageIndex -= 1;
+
+        if (currentImageIndex == 1 && repeatCounter < 3) {
+          repeatCounter ++;
+          makeAllImagesVisible()
+          currentImageIndex = 9;
+          setTimeout(hideImage, 100);
+          return;
+        } else {
+          setTimeout(hideImage, 100);
+        }
+        
+      } else {
+        currentImageIndex = 9;
+        makeAllImagesVisible();
+        rotateAndFadeOut();
+      }
+    }
     
-	
-	
-	
+    function makeAllImagesVisible() {
+      Array.from(arrayOfImages).forEach(function(element) {
+        element.style.visibility = "visible";
+        });
+    }
+    
+    
+    function rotateAndFadeOut() {
+      $( "#icons" ).fadeOut(1000);
+      $(".place-to-eat").fadeIn(1500);
+      arrayOfImages[currentImageIndex].style.boxShadow = "0px 0px 10px 40px rgba(230,245,255,0.3)";
+      document.getElementById("icons").style.transform = "rotateY(180deg)";
+//      document.getElementById("icons").style.opacity = 0;   
+//      document.getElementsByClassName("place-to-eat")[0].style.opacity = 1;  
+    }
+    
+  </script>
+  
+  
+  <script type="text/javascript">
+    
+    //    var x = document.getElementById("lat");
+//    var y = document.getElementById("lon");
+
+//    if (navigator.geolocation) {
+//      navigator.geolocation.getCurrentPosition(showPosition);
+//    } else {
+//      x.innerHTML = "Geolocation is not supported by this browser.";
+//    }
+//
+//    function showPosition(position) {
+//      x.innerHTML = position.coords.latitude;
+//      y.innerHTML = position.coords.longitude;
+//    }
+  </script>
 </body>
+
 </html>
 
 

@@ -1,0 +1,47 @@
+body {
+  font-family: Monospace;
+  background-color: #fff;
+  margin: 0px;
+  overflow: hidden;
+}
+
+body {
+  height: 1000px;
+  background-color: rgba(1, 155, 149, 0.2);
+/*  background-image: url("hmPick.jpg");*/
+  background-repeat: no-repeat;
+  background-position: right 400px;
+  background-size: 200px 150px;
+  background-blend-mode: lighten;
+}
+
+.place-to-eat {
+  padding-top: 325px;
+  font-size: 45px;
+  text-align: center;
+  display: block;
+  vertical-align: middle;
+  top: 250px;
+}
+
+.food-icon {
+  height: 50;
+  width: 50;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  top: 250px;
+  left: 0;
+  right: 0;
+  border-radius: 10px;
+  transition: box-shadow 0.3s ease-in-out;
+  transition: right 0.3s ease-in-out;
+}
+
+
+#icons {
+  transition: opacity 2.3s ease-in-out;
+  transition: transform 1.0s;
+  transform-style: preserve-3d;
+}
+
