@@ -49,12 +49,15 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         #Запись резултатов поиска в массив
         for i in range(0,number_of_places):
             places.append([])               
-            key = "hotels"#Проверка, гостиница ли?
-            if key in data["features"][i]["properties"]["CompanyMetaData"]["Categories"]:
-                print(ДА, data["features"][i]["properties"]["class"])
-            key = "Кальян-бар"#Проверка, кальянная ли?
-            if key in data["features"][i]["properties"]["CompanyMetaData"]["Categories"]:
-                print(ДА, data["features"][i]["properties"]["name"])
+##            key = "hotels"#Проверка, гостиница ли?
+##            if key in data["features"][i]["properties"]["CompanyMetaData"]["Categories"]:
+##                print(ДА, data["features"][i]["properties"]["class"])
+##            key = "Кальян-бар"#Проверка, кальянная ли?
+##            if key in data["features"][i]["properties"]["CompanyMetaData"]["Categories"]:
+##                print(ДА, data["features"][i]["properties"]["name"])
+##             for name in data[
+
+
 
             key = "Hours"
             if key in data["features"][i]["properties"]["CompanyMetaData"]:#Проверка, работает ли заведение сейчас
@@ -81,7 +84,7 @@ httpd.serve_forever()
 
 
 
-
+# проверочка на пустые координаьы
 
 #часы работы сделать hours - > Availabilities есть everyday
 #Категории
