@@ -34,7 +34,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         lon = str(parsed_string["lat"])
         #Ключи запроса
         ll = lat + "," + lon #Координаты
-        spn = "10,10" #Область поиска. Протяженности указываются в градусах, представленных в виде десятичной дроби
+        spn = "0.2,0.2" #Область поиска. Протяженности указываются в градусах, представленных в виде десятичной дроби
         text = "поесть"#Текст запроса
         results = "150" #Количество возвразаемых результатов
         apikey = "5c92e3f1-da73-4954-9231-5ad2cefe8fe2"
@@ -44,7 +44,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         data = response.json()
         number_of_places = data["properties"]["ResponseMetaData"]["SearchRequest"]["results"]#Определение количества найденых мест
         places=[]
-
         
         
         #Запись резултатов поиска в массив
