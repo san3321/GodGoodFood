@@ -14,10 +14,10 @@
 		//var x = document.getElementById("lat");
 		//var y = document.getElementById("lon");
 		var xhr = new XMLHttpRequest();
-		var url = "http://8b7b2f19.ngrok.io";
+		var url = "http://d1f5428f.ngrok.io";
 		var lat = ""
 		var lon = ""
-				
+						
 				
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(showPosition);
@@ -37,9 +37,9 @@
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4 && xhr.status === 200) {
 				
-				var json = JSON.parse(xhr.responseText);
-				console.log(json.lat + ", " + json.lon); //Ответ от .py
-				//console.log(xhr.responseText)
+				//var json = JSON.parse(xhr.responseText);
+				//console.log(json.lat + ", " + json.lon); //Ответ от .py
+				console.log(xhr.responseText)
 			}
 		}
 		
