@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
-  		<script src="http://mrdoob.github.com/three.js/build/three.min.js"></script>
   		<script src="http://code.jquery.com/jquery-latest.min.js"
         type="text/javascript"></script>
           <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -28,12 +27,12 @@
   <b class ="place-to-eat">Вот сюда сходи</b>
   <script type="text/javascript">
 		var xhr = new XMLHttpRequest();
-		var url = "http://d1f5428f.ngrok.io";
+		var url = "http://f5270838.ngrok.io";
 		var lat = "";
 		var lon = "";
 		var isRequestSending = false;
+	  	var response = "";
 						
-				
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(showPosition);
 		} else { 
@@ -43,24 +42,31 @@
 		function showPosition(position) {
 				lat = position.coords.latitude
 				lon = position.coords.longitude
-				console.log("Попал")
 			}
 				
 		function sendLocationRequest(){
-				xhr.open("POST", url, true);
-		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.onreadystatechange = function () {
+			isRequestSending = true;
+			xhr.open("POST", url, true);
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4 && xhr.status === 200) {
-				
 				//var json = JSON.parse(xhr.responseText);
-				//console.log(json.lat + ", " + json.lon); //Ответ от .py
-				console.log(xhr.responseText)
+//				console.log(json.lat + ", " + json.lon); //Ответ от .py
+				response = xhr.responseText;
+				isRequestSending = false;
 			}
 		}
 		
+		console.log(lat, lon)
+		if (lat) {
+					console.log("jere")
+
 		var data = JSON.stringify({"lat": lat, "lon": lon});
 		console.log(data)
 		xhr.send(data);
+		} else {
+			sendLocationRequest()
+		}
 		}
 	
 	  $( function() {
@@ -85,15 +91,14 @@
   var arrayOfImages = document.getElementsByClassName("food-icon");
         
     function hideImage(){
-	  if (!isRequestSending){
-	  sendLocationRequest()
+	  if (!isRequestSending && response.length == 0){
+	  	   sendLocationRequest()
 	  };
+		
       arrayOfImages[currentImageIndex].style.visibility = "hidden";
       if (currentImageIndex > 0) {
         currentImageIndex -= 1;
-		isRequestSending = true;
-
-        if (currentImageIndex == 1 && repeatCounter < 3) {
+        if (currentImageIndex == 1 && isRequestSending) {
           repeatCounter ++;
           makeAllImagesVisible()
           currentImageIndex = 9;
@@ -101,8 +106,8 @@
           return;
         } else {
           setTimeout(hideImage, 100);
-        }
-        
+        }    
+		  
       } else {
         currentImageIndex = 9;
         makeAllImagesVisible();
@@ -123,6 +128,7 @@
       $(".place-to-eat").fadeIn(1500);
       arrayOfImages[currentImageIndex].style.boxShadow = "0px 0px 10px 40px rgba(230,245,255,0.3)";
       document.getElementById("icons").style.transform = "rotateY(180deg)";
+	$(".place-to-eat").text(response);
 
     }
     
@@ -134,24 +140,6 @@
 </p>
  
 <div id="slider-range"></div>
-
-  
-  <script type="text/javascript">
-    
-    //    var x = document.getElementById("lat");
-//    var y = document.getElementById("lon");
-
-//    if (navigator.geolocation) {
-//      navigator.geolocation.getCurrentPosition(showPosition);
-//    } else {
-//      x.innerHTML = "Geolocation is not supported by this browser.";
-//    }
-//
-//    function showPosition(position) {
-//      x.innerHTML = position.coords.latitude;
-//      y.innerHTML = position.coords.longitude;
-//    }
-  </script>
 </body>
 
 </html>
