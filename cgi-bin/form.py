@@ -55,7 +55,10 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 ##            key = "Кальян-бар"#Проверка, кальянная ли?
 ##            if key in data["features"][i]["properties"]["CompanyMetaData"]["Categories"]:
 ##                print(ДА, data["features"][i]["properties"]["name"])
-##             for name in data[
+            
+            for name in data["features"][i]["properties"].items():
+                if name == "Кальян-бар":
+                    print(data["features"][i]["properties"]["name"])
 
 
 
