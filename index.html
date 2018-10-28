@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>GodGoodFood</title>
 <link href="style.css" rel="stylesheet">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
   		<script src="http://code.jquery.com/jquery-latest.min.js"
@@ -32,6 +32,9 @@
 		var lon = "";
 		var isRequestSending = false;
 	  	var response = "";
+	    var now = new Date().getTime();
+  		var currentImageIndex = 9;
+  		var repeatCounter = 0;
 						
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(showPosition);
@@ -56,15 +59,13 @@
 				isRequestSending = false;
 			}
 		}
-		
-		console.log(lat, lon)
-		if (lat) {
-					console.log("jere")
 
+		if (lat) {
 		var data = JSON.stringify({"lat": lat, "lon": lon});
 		console.log(data)
 		xhr.send(data);
-		} else {
+		} else if (repeatCounter < 3) {
+			repeatCounter++;
 			sendLocationRequest()
 		}
 		}
@@ -84,9 +85,6 @@
   } );
 	  
    $( ".place-to-eat" ).fadeOut(0);
-  var now = new Date().getTime();
-  var currentImageIndex = 9;
-  var repeatCounter = 0;
   
   var arrayOfImages = document.getElementsByClassName("food-icon");
         
@@ -99,13 +97,12 @@
       if (currentImageIndex > 0) {
         currentImageIndex -= 1;
         if (currentImageIndex == 1 && isRequestSending) {
-          repeatCounter ++;
           makeAllImagesVisible()
           currentImageIndex = 9;
-          setTimeout(hideImage, 100);
+          setTimeout(hideImage, 75);
           return;
         } else {
-          setTimeout(hideImage, 100);
+          setTimeout(hideImage, 75);
         }    
 		  
       } else {
@@ -130,10 +127,8 @@
       document.getElementById("icons").style.transform = "rotateY(180deg)";
 	$(".place-to-eat").text(response);
 
-    }
-    
+    }  
   </script>
-  
   <p>
   <label class = "priceRange" for="amount">Выбери сумму:</label>
   <input  class = "priceRange" type="text" id="amount" readonly >
