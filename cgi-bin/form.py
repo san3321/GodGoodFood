@@ -34,18 +34,19 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         lon = str(parsed_string["lat"])
         #Ключи запроса
         ll = lat + "," + lon #Координаты
-        spn = "0.2,0.2" #Область поиска. Протяженности указываются в градусах, представленных в виде десятичной дроби
+        spn = "0.02,0.02" #Область поиска. Протяженности указываются в градусах, представленных в виде десятичной дроби
         text = "поесть"#Текст запроса
         results = "150" #Количество возвразаемых результатов
+        rspn = "1" #Ограничить зону поиска заданным значением
         apikey = "5c92e3f1-da73-4954-9231-5ad2cefe8fe2"
         #Формирование запроса
-        url = 'https://search-maps.yandex.ru/v1/?type=biz&lang=ru_RU&ll='+ll+'&spn='+spn+'&text='+text+'&apikey='+apikey+'&results='+results
+        url = 'https://search-maps.yandex.ru/v1/?type=biz&lang=ru_RU&ll='+ll+'&spn='+spn+'&text='+text+'&apikey='+apikey+'&results='+results+'&rspn='+rspn
         response = requests.get(url)#Отправляем запрос в Яндекс
         data = response.json()
         number_of_places = data["properties"]["ResponseMetaData"]["SearchRequest"]["results"]#Определение количества найденых мест
         places=[]
         
-        
+        print(number_of_places)
         #Запись резултатов поиска в массив
         for i in range(0,number_of_places):
             places.append([])               
@@ -56,9 +57,9 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 ##            if key in data["features"][i]["properties"]["CompanyMetaData"]["Categories"]:
 ##                print(ДА, data["features"][i]["properties"]["name"])
             
-            for name in data["features"][i]["properties"].items():
-                if name == "Кальян-бар":
-                    print(data["features"][i]["properties"]["name"])
+##            for name in data["features"][i]["properties"].items():
+##                if name == "Кальян-бар":
+##                    print(data["features"][i]["properties"]["name"])
 
 
 
@@ -78,8 +79,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         
         res = "{'name': '" + places[0][1] + "', 'address': '" + places[0][2] + "'}"#Формирование ответа
         self.wfile.write(res.encode('utf-8'))#Отправка ответа
-        
-        
+      
 
 httpd = HTTPServer(('localhost', 8000), SimpleHTTPRequestHandler)
 print ("Server started. localhost: 8000", )
