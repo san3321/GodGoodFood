@@ -43,13 +43,12 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         url = 'https://search-maps.yandex.ru/v1/?type=biz&lang=ru_RU&ll='+ll+'&spn='+spn+'&text='+text+'&apikey='+apikey+'&results='+results+'&rspn='+rspn
         response = requests.get(url)#Отправляем запрос в Яндекс
         data = response.json()
-        number_of_places = data["properties"]["ResponseMetaData"]["SearchRequest"]["results"]#Определение количества найденых мест
+        number_of_places = data["properties"]["ResponseMetaData"]["SearchResponse"]["found"]#Определение количества найденых мест
         places=[]
-        
         print(number_of_places)
         #Запись резултатов поиска в массив
         for i in range(0,number_of_places):
-            places.append([])               
+            places.append([])            
 ##            key = "hotels"#Проверка, гостиница ли?
 ##            if key in data["features"][i]["properties"]["CompanyMetaData"]["Categories"]:
 ##                print(ДА, data["features"][i]["properties"]["class"])
@@ -60,26 +59,23 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 ##            for name in data["features"][i]["properties"].items():
 ##                if name == "Кальян-бар":
 ##                    print(data["features"][i]["properties"]["name"])
-
-
-
             key = "Hours"
             if key in data["features"][i]["properties"]["CompanyMetaData"]:#Проверка, работает ли заведение сейчас
                 if data["features"][i]["properties"]["CompanyMetaData"]["Hours"]["State"]["is_open_now"] == "1":
                     places[i].append(data["features"][i]["properties"]["id"])
                     places[i].append(data["features"][i]["properties"]["name"])
                     places[i].append(data["features"][i]["properties"]["description"])
+                    places[i].append(data["features"][i]["geometry"]["coordinates"][1]) #Долгота
+                    places[i].append(data["features"][i]["geometry"]["coordinates"][0]) #Широта
                     
                     key = "url"#Проверка, есть ли url в ответе
                     if key in data["features"][i]["properties"]["CompanyMetaData"]:
                         places[i].append(data["features"][i]["properties"]["CompanyMetaData"]["url"])
                         
-                    places[i].append(data["features"][i]["geometry"]["coordinates"][1]) #Долгота
-                    places[i].append(data["features"][i]["geometry"]["coordinates"][0]) #Широта
-        
-        res = "{'name': '" + places[0][1] + "', 'address': '" + places[0][2] + "'}"#Формирование ответа
-        self.wfile.write(res.encode('utf-8'))#Отправка ответа
-      
+        res = {"name": places[0][1], "address": places[0][2], "lat": places[0][3], "lon":places[0][4]}#Фомирование ответа
+        responseJS = json.dumps(res)#Подготовка JS 
+        self.wfile.write(responseJS.encode('utf-8'))#Отправка ответа
+    
 
 httpd = HTTPServer(('localhost', 8000), SimpleHTTPRequestHandler)
 print ("Server started. localhost: 8000", )
