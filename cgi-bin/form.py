@@ -5,6 +5,7 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 import requests
 import json
 from io import BytesIO
+import random
 
 
 
@@ -44,35 +45,60 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         response = requests.get(url)#Отправляем запрос в Яндекс
         data = response.json()
         number_of_places = data["properties"]["ResponseMetaData"]["SearchResponse"]["found"]#Определение количества найденых мест
+        if number_of_places > int(results):#чтобы не выйти за граници массива
+            number_of_places = int(results)
         places=[]
-        print(number_of_places)
+        result_places = 0 #Чтобы считать хорошие места
         #Запись резултатов поиска в массив
         for i in range(0,number_of_places):
-            places.append([])            
-##            key = "hotels"#Проверка, гостиница ли?
-##            if key in data["features"][i]["properties"]["CompanyMetaData"]["Categories"]:
-##                print(ДА, data["features"][i]["properties"]["class"])
-##            key = "Кальян-бар"#Проверка, кальянная ли?
-##            if key in data["features"][i]["properties"]["CompanyMetaData"]["Categories"]:
-##                print(ДА, data["features"][i]["properties"]["name"])
-            
-##            for name in data["features"][i]["properties"].items():
-##                if name == "Кальян-бар":
-##                    print(data["features"][i]["properties"]["name"])
-            key = "Hours"
-            if key in data["features"][i]["properties"]["CompanyMetaData"]:#Проверка, работает ли заведение сейчас
-                if data["features"][i]["properties"]["CompanyMetaData"]["Hours"]["State"]["is_open_now"] == "1":
-                    places[i].append(data["features"][i]["properties"]["id"])
-                    places[i].append(data["features"][i]["properties"]["name"])
-                    places[i].append(data["features"][i]["properties"]["description"])
-                    places[i].append(data["features"][i]["geometry"]["coordinates"][1]) #Долгота
-                    places[i].append(data["features"][i]["geometry"]["coordinates"][0]) #Широта
-                    
-                    key = "url"#Проверка, есть ли url в ответе
-                    if key in data["features"][i]["properties"]["CompanyMetaData"]:
-                        places[i].append(data["features"][i]["properties"]["CompanyMetaData"]["url"])
+            goodplace = 1
+            x = data["features"][i]["properties"]["CompanyMetaData"]["Categories"]
+            for item in x:
+                if item["name"]=="Кальян-бар":
+                    goodplace = 0
+            if goodplace==1:
+                if "Hours" in data["features"][i]["properties"]["CompanyMetaData"]:#Проверка, работает ли заведение сейчас
+                    if data["features"][i]["properties"]["CompanyMetaData"]["Hours"]["State"]["is_open_now"] == "1":
+                        places.append([])
+                        places[result_places].append(data["features"][i]["properties"]["id"])
+                        places[result_places].append(data["features"][i]["properties"]["name"])
+                        places[result_places].append(data["features"][i]["properties"]["description"])
+                        places[result_places].append(data["features"][i]["geometry"]["coordinates"][1]) #Долгота
+                        places[result_places].append(data["features"][i]["geometry"]["coordinates"][0]) #Широта
                         
-        res = {"name": places[0][1], "address": places[0][2], "lat": places[0][3], "lon":places[0][4]}#Фомирование ответа
+                        if "url" in data["features"][i]["properties"]["CompanyMetaData"]:#Проверка, есть ли url в ответе
+                            places[result_places].append(data["features"][i]["properties"]["CompanyMetaData"]["url"])
+                        else:
+                            places[result_places].append("Нет сайта")
+                            
+                        if "Features" in data["features"][i]["properties"]["CompanyMetaData"]:
+                            x = data["features"][i]["properties"]["CompanyMetaData"]["Features"]
+                            places[result_places].append("Нет инфы")#Обед
+                            places[result_places].append("Нет инфы")#Оплата кредиткой
+                            places[result_places].append("Нет инфы")#Средний счёт
+                            places[result_places].append("Нет инфы")#Завтрак
+                            for item in x:
+                                if item['id']=='business_lunch':
+                                    places[result_places][6] = item['value']
+                                if item['id']=='payment_by_credit_card':
+                                    places[result_places][7] = item['value']
+                                if item['id']=='average_bill2':
+                                    places[result_places][8] = item['value']
+                                if item['id']=='breakfast':
+                                    places[result_places][9] = item['value']
+                        else:
+                            places[result_places].append("Нет инфы")#Обед
+                            places[result_places].append("Нет инфы")#Оплата кредиткой
+                            places[result_places].append("Нет инфы")#Средний счёт
+                            places[result_places].append("Нет инфы")#Завтрак
+                        result_places = result_places + 1
+
+            
+            
+        #Фомирование ответа
+        mesto = random.randint(0, (result_places - 1))
+        print(places[mesto][1], places[mesto][2],places[mesto][3], places[mesto][4])
+        res = {"name": places[mesto][1], "address": places[mesto][2], "lat": places[mesto][3], "lon": places[mesto][4], "lunch": places[mesto][6], "credit_card": places[mesto][7], "average_bill": places[mesto][8], "breakfast": places[mesto][9]}
         responseJS = json.dumps(res)#Подготовка JS 
         self.wfile.write(responseJS.encode('utf-8'))#Отправка ответа
     
@@ -83,10 +109,9 @@ httpd.serve_forever()
 
 
 
-# проверочка на пустые координаьы
+
 
 #часы работы сделать hours - > Availabilities есть everyday
-#Категории
 #Специальное меню
 #оплата картой
 #завтрак

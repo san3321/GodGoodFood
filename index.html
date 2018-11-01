@@ -27,7 +27,7 @@
   <b class ="place-to-eat">Вот сюда сходи</b>
   <script type="text/javascript">
 		var xhr = new XMLHttpRequest();
-		var url = "http://5fc8855f.ngrok.io";
+		var url = "http://c9ee732f.ngrok.io";
 		var lat = "";
 		var lon = "";
 		var isRequestSending = false;
@@ -54,7 +54,7 @@
 			xhr.onreadystatechange = function () {
 			if (xhr.readyState === 4 && xhr.status === 200) {
 				var json = JSON.parse(xhr.responseText);
-				console.log(json.name + ", " + json.address +", " + json.lat + ", " + json.lon); //Ответ от .py
+				console.log(json.name + " | " + json.address +" | " + json.lat + " | " + json.lon + " | Обед: " + json.lunch + " | Оплата картой: " + json.credit_card + " | Средний счёт: " + json.average_bill + " | Завтрак: " + json.breakfast); //Ответ от .py
 				response = json.name + ", " + json.address;
 				isRequestSending = false;
 			}
