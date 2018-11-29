@@ -6,18 +6,11 @@ body {
 }
 
 body {
-  height: 1000px;
   background-color: rgba(1, 155, 149, 0.2);
-/*  background-image: url("hmPick.jpg");*/
-  background-repeat: no-repeat;
-  background-position: right 400px;
-  background-size: 200px 150px;
-  background-blend-mode: lighten;
 }
 
 .place-to-eat {
   visibility: hidden;
-/*  position: absolute;*/
   padding-top: 200px;
   font-size: 20px;
   text-align: center;
@@ -27,18 +20,15 @@ body {
 }
 
 .food-icon {
-  height: 50;
-  width: 50;
-  position: absolute;
-  left: 0px;
-  right: 0px;
-  top: 100px;
-  border-radius: 10px;
-  box-shadow: 5px 5px 5px #def;
-  transition: box-shadow 0.3s ease-in-out;
-  transition: right 0.3s ease-in-out;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 100px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px #def;
+    transition: box-shadow 0.3s ease-in-out;
+    transition: right 0.3s ease-in-out;
 }
-
 
 .add-new-rest {
   border: none;
@@ -58,12 +48,6 @@ body {
 	top: 350px;
 }
 
-
-
-label.priceRange  {
-/*  	top: 330px;*/
-}
-
 input.priceRange  {
 	width: 250px;
 }
@@ -73,7 +57,6 @@ input.priceRange  {
 	background-color: mintcream;
     margin-bottom: 100px;
 
-/*	background-image: linear-gradient(#e66465, #9198e5);	*/
 }
 
 #slider-range div {
@@ -86,19 +69,17 @@ input.priceRange  {
 }
 
 #icons {
-  height: 400;
   transition: opacity 2.3s ease-in-out;
   transition: transform 1.0s;
   transform-style: preserve-3d;
 }
-
 
 .centred {
   display: block;
   margin: 0 auto;
 }
 
-.data-reservation {
+.search-form {
     position: relative;
     display: flex;
     flex-wrap: wrap;
@@ -116,23 +97,22 @@ input.priceRange  {
     font-weight: bold;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-
 }
 
-.data-reservation span {
+.search-form span {
     position: relative;
     top: 12px;
     width: 92px;
 }
 
-.data-reservation .modal-container {
+.search-form .modal-container {
   width: 540px;
    padding-left: 10px;
    padding-top: 20px;
 
 }
 
-.data-reservation input {
+.search-form input {
     float: right;
     clear: both;
     margin-right: 30px;
@@ -148,12 +128,12 @@ input.priceRange  {
 
 }
 
-.data-reservation input:focus {
+.search-form input:focus {
     background: none;
     outline: 2px solid #B4D5FE;
 }
 
-#search-form h2 {
+#search-section h2 {
   display: block;
   margin: 0 auto;
   width: 568px;
@@ -166,7 +146,7 @@ input.priceRange  {
 }
 
 
-.data-reservation select {
+.search-form select {
     float:right;
     clear: both;
     text-align-last:center;
@@ -179,30 +159,31 @@ input.priceRange  {
     color: inherit;
 }
 
-.data-reservation .extendedSize {
-  height: 40px;
-  width: 367px;
+.search-form .extendedSize {
+	height: 40px;
+	width: 367px;
 }
 
-.data-reservation div:last-of-type {
-  height: 100px;
-   width: 568px; 
+.search-form div:last-of-type {
+	height: 100px;
+	width: 568px; 
 }
 
 #send-new-rest {
-  position: absolute;
-  border: none;
-  margin: 30px 0;
-  height: 40px;
-  right: 35px;
-  display: inline-block;
-  width: 120px;
-  font: inherit;
-  background-color:#f39f93;
+    position: absolute;
+    border: none;
+    margin: 30px 0;
+    height: 40px;
+    right: 35px;
+    display: inline-block;
+	width: 120px;
+	font: inherit;	
+	background-color:#f39f93;
+	font-size: 20px;
+
 }
 
-
-#search-form {
+#search-section {
   position: absolute;
   top: 100px;
   right: 0px;
@@ -210,3 +191,114 @@ input.priceRange  {
   margin: 0 auto;
   visibility: hidden;
 }
+
+
+@media screen and (max-device-width: 500px) {
+.food-icon {
+	top: 200px;
+	width: 600px;
+	height: 600px;
+	border-radius: 40px;
+	}
+	
+.add-new-rest {
+  	height: 100px;
+  	width: 600px;
+	font-size: 20px;
+	}
+.price-selection {
+  	padding-top: 900px;
+	}
+
+label.priceRange  {
+	font-size: 50px;
+	margin-bottom: 20px;
+}
+	
+input.priceRange  {
+	width: 600px;
+	height: 100px;
+	font-size: 40px;
+	}
+	
+#slider-range span {
+	height: 54px;
+	width: 54px;
+}
+	
+#slider-range  {
+	width: 600px;
+	height: 50px;
+	background-color: mintcream;
+	margin-top: 40px;
+    margin-bottom: 300px;
+}
+.search-form {
+	height: 1500px;
+	width: 900px;
+	}
+	
+#search-section {
+	top: 50px;
+}
+#search-section h2 {
+	padding-top: 50px;
+	width: 900px;
+	height: 100px;
+	font-size: 35px;
+}
+	
+#send-new-rest {
+	right: 0px;
+	left: 0px;
+	margin: 0 auto;
+	height: 100px;
+	width: 600px;
+}
+
+.search-form .modal-container {
+  width: 900px;
+   padding-top: 100px;
+}
+	
+.search-form input {
+	display: block;
+	float: none;
+	left: 0px;
+	right: 0px;
+	margin: 0 auto;
+	padding: 0;
+    width: 546px;
+    height: 78px;
+	font-size: 20px;
+}
+.search-form select {
+	display: block;
+	float: none;
+	left: 0px;
+	right: 0px;
+	margin: 0 auto;
+	padding: 0;
+    width: 546px;
+    height: 78px;
+	font-size: 20px;
+}
+
+.search-form .extendedSize {
+	width: 576px;
+	height: 78px;
+}
+	
+.search-form span {
+	display: block;
+	text-align: center;
+	float: none;
+	left: 0px;
+	right: 0px;
+	margin: 0 auto;
+	top: -50px;
+    width: 400px;
+	font-size: 20px;
+	}	
+}
+

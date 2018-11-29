@@ -11,11 +11,11 @@
         $( "#icons" ).click(hideImage);
 
         $("#add-new-rest-action").click(function(){
-          document.getElementById("search-form").style.visibility = "visible";
+          document.getElementById("search-section").style.visibility = "visible";
         });
 
         $("#send-new-rest").click(function(){
-          document.getElementById("search-form").style.visibility = "hidden";
+          document.getElementById("search-section").style.visibility = "hidden";
         });
 
 		if (navigator.geolocation) {
