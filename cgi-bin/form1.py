@@ -6,7 +6,7 @@ import requests
 import json
 from io import BytesIO
 import random
-import sqlite3############
+import sqlite3
 
 
 
@@ -198,7 +198,7 @@ for i in range(0,number_of_places):
             result_places = result_places + 1
                 
 conn = sqlite3.connect('DataBase.db')#Открытие базы
-cursor = conn.cursor()#Установка курсораs
+cursor = conn.cursor()#Установка курсора
 for i in range(0,result_places - 1):
     if places[i][6]!="Нет инфы" and places[i][7]!="Нет инфы":#проверка, указана ли инфа по карте и по обеду
         #Загрузка видов кухни

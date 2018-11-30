@@ -9,7 +9,7 @@ body {
   background-color: rgba(1, 155, 149, 0.2);
 }
 
-.place-to-eat {
+#place-to-eat {
   visibility: hidden;
   padding-top: 200px;
   font-size: 20px;
