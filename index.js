@@ -1,5 +1,5 @@
 		var xhr = new XMLHttpRequest();
-		var url = "http://1a46f52c.ngrok.io";
+		var url = "http://80241d8f.ngrok.io";
 		var lat = "";
 		var lon = "";
 		var isRequestSending = false;
@@ -107,10 +107,10 @@
     
     function rotateAndFadeOut() {
       $( "#icons" ).fadeOut(1000);
-      $(".place-to-eat").style.visibility = "visible";
-      $(".place-to-eat").fadeIn(1500);
+     	document.getElementById("place-to-eat").style.visibility = "visible";
+      $( "#place-to-eat" ).fadeIn(1500);
       arrayOfImages[currentImageIndex].style.boxShadow = "0px 0px 10px 40px rgba(230,245,255,0.3)";
       document.getElementById("icons").style.transform = "rotateY(180deg)";
-	  $(".place-to-eat").text(response);
+	  document.getElementById("place-to-eat").textContent = response;
 
     } 
