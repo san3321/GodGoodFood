@@ -27,6 +27,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
         response = BytesIO()
         response.write(body)
+        print(self.path)
         self.places_response(body) #Обработка запроса
         
     def places_response(self,res):

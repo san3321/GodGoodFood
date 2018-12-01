@@ -1,5 +1,5 @@
 		var xhr = new XMLHttpRequest();
-		var url = "http://80241d8f.ngrok.io";
+		var url = "http://c3357b0a.ngrok.io";
 		var lat = "";
 		var lon = "";
 		var isRequestSending = false;
